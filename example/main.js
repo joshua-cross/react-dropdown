@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import FlatArrayExample from './flatArrayExample'
 import ObjectArrayExample from './objectArrayExample'
 import ZeroValObjectArrayExample from './zeroValObjectArrayExample'
-import CustomArrowExample from './CustomArrowExample'
+import CustomArrowExample from './customArrowExample'
 
 class App extends Component {
   render () {
@@ -19,7 +19,7 @@ class App extends Component {
           </p>
           <div className='code'>
             <pre>
-              { "$ npm install react-dropdown --save" }
+              { '$ npm install react-dropdown --save' }
             </pre>
           </div>
         </section>
@@ -27,6 +27,7 @@ class App extends Component {
         <section>
           <h3>Examples: </h3>
           <h4>Usage: </h4>
+          <input type='text' />
           <div className='code'>
             <pre>
               {`
@@ -34,6 +35,8 @@ class App extends Component {
               `}
             </pre>
           </div>
+          <input type='text' />
+
         </section>
 
         <FlatArrayExample />
@@ -51,7 +54,6 @@ class App extends Component {
 
     )
   }
-
 }
 
 ReactDOM.render(<App />, document.querySelector('#app'))
