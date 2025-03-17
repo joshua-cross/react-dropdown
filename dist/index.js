@@ -115,6 +115,24 @@ var Dropdown = function Dropdown(props) {
       });
     }
   };
+  var handleKeyDown = function handleKeyDown(event) {
+    // event.stopPropagation()
+    // event.preventDefault()
+
+    console.log('Key: ', event.key);
+    if (event.key === 'Enter') {
+      if (props.onFocus && typeof props.onFocus === 'function') {
+        props.onFocus(state.isOpen);
+      }
+      if (!props.disabled) {
+        setState(function (prevState) {
+          return _objectSpread(_objectSpread({}, prevState), {}, {
+            isOpen: !prevState.isOpen
+          });
+        });
+      }
+    }
+  };
   var setValue = function setValue(value, label) {
     var newSelected = {
       value: value,
@@ -210,6 +228,7 @@ var Dropdown = function Dropdown(props) {
     className: controlClass,
     role: "menu",
     tabIndex: 0,
+    onKeyDown: handleKeyDown,
     onMouseDown: handleMouseDown,
     onTouchEnd: handleMouseDown,
     "aria-haspopup": "listbox"
