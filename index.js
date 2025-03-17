@@ -216,7 +216,7 @@ class Dropdown extends Component {
 
     return (
       <div ref={this.dropdownRef} className={dropdownClass}>
-        <div className={controlClass} onMouseDown={this.handleMouseDown.bind(this)} onTouchEnd={this.handleMouseDown.bind(this)} aria-haspopup='listbox'>
+        <div className={controlClass} tabIndex={0} onMouseDown={this.handleMouseDown.bind(this)} onTouchEnd={this.handleMouseDown.bind(this)} aria-haspopup='listbox'>
           {value}
           <div className={`${baseClassName}-arrow-wrapper`}>
             {arrowOpen && arrowClosed
