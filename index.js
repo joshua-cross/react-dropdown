@@ -159,6 +159,11 @@ const Dropdown = (props) => {
         className={optionClass}
         onMouseDown={() => setValue(value, label)}
         onClick={() => setValue(value, label)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            setValue(value, label)
+          }
+        }}
         onBlur={(e) => {
           if (!isDropdown(e.relatedTarget)) {
             closeDropdown()

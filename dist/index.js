@@ -188,6 +188,11 @@ var Dropdown = function Dropdown(props) {
       onClick: function onClick() {
         return setValue(value, label);
       },
+      onKeyDown: function onKeyDown(e) {
+        if (e.key === 'Enter') {
+          setValue(value, label);
+        }
+      },
       onBlur: function onBlur(e) {
         if (!isDropdown(e.relatedTarget)) {
           closeDropdown();
