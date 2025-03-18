@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import classNames from 'classnames'
 
 const DEFAULT_PLACEHOLDER_STRING = 'Select...'
@@ -28,7 +28,8 @@ const Dropdown = (props) => {
       label: typeof props.placeholder === 'undefined' ? DEFAULT_PLACEHOLDER_STRING : props.placeholder,
       value: ''
     },
-    isOpen: false
+    isOpen: false,
+    isFocused: false
   })
 
   const dropdownRef = useRef(null)
@@ -69,10 +70,18 @@ const Dropdown = (props) => {
     if (mounted.current) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         if (state.isOpen) {
-          setState(prevState => ({ ...prevState, isOpen: false }))
+          setState(prevState => ({ ...prevState, isOpen: false, isFocused: false }))
         }
       }
     }
+  }
+
+  const closeDropdown = () => {
+    setState(prevState => ({ ...prevState, isOpen: false, isFocused: false }))
+  }
+
+  const openDropdown = () => {
+    setState(prevState => ({ ...prevState, isOpen: true, isFocused: true }))
   }
 
   const handleMouseDown = (event) => {
@@ -118,6 +127,8 @@ const Dropdown = (props) => {
     })
   }
 
+  const isDropdown = useCallback((el) => el.classList.contains(`${props.baseClassName}-option`) || el.classList.contains(`${props.baseClassName}-root`), [props])
+
   const renderOption = (option) => {
     let value = option.value
     if (typeof value === 'undefined') {
@@ -148,7 +159,13 @@ const Dropdown = (props) => {
         className={optionClass}
         onMouseDown={() => setValue(value, label)}
         onClick={() => setValue(value, label)}
+        onBlur={(e) => {
+          if (!isDropdown(e.relatedTarget)) {
+            closeDropdown()
+          }
+        }}
         role='option'
+        tabIndex='0'
         aria-selected={isSelected ? 'true' : 'false'}
         {...dataAttributes}
       >
@@ -198,7 +215,8 @@ const Dropdown = (props) => {
   const dropdownClass = classNames({
     [`${baseClassName}-root`]: true,
     [className]: !!className,
-    'is-open': state.isOpen
+    'is-open': state.isOpen,
+    'is-focused': state.isFocused
   })
   const controlClass = classNames({
     [`${baseClassName}-control`]: true,
@@ -239,6 +257,12 @@ const Dropdown = (props) => {
         tabIndex={0}
         onKeyDown={handleKeyDown}
         onMouseDown={handleMouseDown}
+        onFocus={openDropdown}
+        onBlur={(e) => {
+          if (!isDropdown(e.relatedTarget)) {
+            closeDropdown()
+          }
+        }}
         onTouchEnd={handleMouseDown}
         aria-haspopup='listbox'
       >
