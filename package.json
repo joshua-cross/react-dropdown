@@ -31,6 +31,8 @@
   },
   "homepage": "https://github.com/fraserxu/react-dropdown",
   "dependencies": {
+    "@types/react": "^19.0.11",
+    "@types/react-dom": "^19.0.4",
     "classnames": "^2.2.3"
   },
   "peerDependencies": {
@@ -58,8 +60,8 @@
     "browserify-hmr": "^0.4.0",
     "ecstatic": "^1.4.0",
     "gh-pages": "^0.11.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "standard": "^11.0.1",
     "watchify": "^3.7.0"
   },
