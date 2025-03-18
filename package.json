@@ -1,6 +1,6 @@
 {
   "name": "react-dropdown",
-  "version": "1.11.6",
+  "version": "1.11.7",
   "description": "React dropdown component",
   "main": "dist/index.js",
   "style": "style.css",
@@ -36,8 +36,8 @@
     "classnames": "^2.2.3"
   },
   "peerDependencies": {
-    "react": "^0.14.7 || ^15.0.0-0 || ^16.0.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^0.14.7 || ^15.0.0-0 || ^16.0.0 || ^17.0.0|| ^18.0.0"
+    "react": "^15.0.0-0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
+    "react-dom": "^15.0.0-0 || ^16.0.0 || ^17.0.0|| ^18.0.0 || ^19.0.0"
   },
   "browserify": {
     "transform": [
@@ -60,8 +60,8 @@
     "browserify-hmr": "^0.4.0",
     "ecstatic": "^1.4.0",
     "gh-pages": "^0.11.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^15.0.0-0",
+    "react-dom": "^15.0.0-0",
     "standard": "^11.0.1",
     "watchify": "^3.7.0"
   },
