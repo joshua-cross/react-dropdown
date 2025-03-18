@@ -47,7 +47,8 @@ var Dropdown = function Dropdown(props) {
         label: typeof props.placeholder === 'undefined' ? DEFAULT_PLACEHOLDER_STRING : props.placeholder,
         value: ''
       },
-      isOpen: false
+      isOpen: false,
+      isFocused: false
     }),
     _useState2 = _slicedToArray(_useState, 2),
     state = _useState2[0],
@@ -93,12 +94,29 @@ var Dropdown = function Dropdown(props) {
         if (state.isOpen) {
           setState(function (prevState) {
             return _objectSpread(_objectSpread({}, prevState), {}, {
-              isOpen: false
+              isOpen: false,
+              isFocused: false
             });
           });
         }
       }
     }
+  };
+  var closeDropdown = function closeDropdown() {
+    setState(function (prevState) {
+      return _objectSpread(_objectSpread({}, prevState), {}, {
+        isOpen: false,
+        isFocused: false
+      });
+    });
+  };
+  var openDropdown = function openDropdown() {
+    setState(function (prevState) {
+      return _objectSpread(_objectSpread({}, prevState), {}, {
+        isOpen: true,
+        isFocused: true
+      });
+    });
   };
   var handleMouseDown = function handleMouseDown(event) {
     if (props.onFocus && typeof props.onFocus === 'function') {
@@ -146,6 +164,9 @@ var Dropdown = function Dropdown(props) {
       isOpen: false
     });
   };
+  var isDropdown = (0, _react.useCallback)(function (el) {
+    return el.classList.contains("".concat(props.baseClassName, "-option")) || el.classList.contains("".concat(props.baseClassName, "-root"));
+  }, [props]);
   var renderOption = function renderOption(option) {
     var value = option.value;
     if (typeof value === 'undefined') {
@@ -167,7 +188,13 @@ var Dropdown = function Dropdown(props) {
       onClick: function onClick() {
         return setValue(value, label);
       },
+      onBlur: function onBlur(e) {
+        if (!isDropdown(e.relatedTarget)) {
+          closeDropdown();
+        }
+      },
       role: "option",
+      tabIndex: "0",
       "aria-selected": isSelected ? 'true' : 'false'
     }, dataAttributes), label);
   };
@@ -209,7 +236,7 @@ var Dropdown = function Dropdown(props) {
     className = props.className;
   var disabledClass = props.disabled ? 'Dropdown-disabled' : '';
   var placeHolderValue = typeof state.selected === 'string' ? state.selected : state.selected.label;
-  var dropdownClass = (0, _classnames["default"])(_defineProperty(_defineProperty(_defineProperty({}, "".concat(baseClassName, "-root"), true), className, !!className), 'is-open', state.isOpen));
+  var dropdownClass = (0, _classnames["default"])(_defineProperty(_defineProperty(_defineProperty(_defineProperty({}, "".concat(baseClassName, "-root"), true), className, !!className), 'is-open', state.isOpen), 'is-focused', state.isFocused));
   var controlClass = (0, _classnames["default"])(_defineProperty(_defineProperty(_defineProperty({}, "".concat(baseClassName, "-control"), true), controlClassName, !!controlClassName), disabledClass, !!disabledClass));
   var placeholderClass = (0, _classnames["default"])(_defineProperty(_defineProperty(_defineProperty({}, "".concat(baseClassName, "-placeholder"), true), placeholderClassName, !!placeholderClassName), 'is-selected', isValueSelected()));
   var menuClass = (0, _classnames["default"])(_defineProperty(_defineProperty({}, "".concat(baseClassName, "-menu"), true), menuClassName, !!menuClassName));
@@ -230,6 +257,12 @@ var Dropdown = function Dropdown(props) {
     tabIndex: 0,
     onKeyDown: handleKeyDown,
     onMouseDown: handleMouseDown,
+    onFocus: openDropdown,
+    onBlur: function onBlur(e) {
+      if (!isDropdown(e.relatedTarget)) {
+        closeDropdown();
+      }
+    },
     onTouchEnd: handleMouseDown,
     "aria-haspopup": "listbox"
   }, value, /*#__PURE__*/_react["default"].createElement("div", {
